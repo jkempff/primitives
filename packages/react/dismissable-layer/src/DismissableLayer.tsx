@@ -102,8 +102,9 @@ const DismissableLayer = React.forwardRef<DismissableLayerElement, DismissableLa
     }, ownerDocument);
 
     useEscapeKeydown((event) => {
-      const isHighestLayer = index === context.layers.size - 1;
-      if (!isHighestLayer) return;
+      const isHighestOpenLayer =
+        index === layers.filter((layer) => layer.dataset.state === 'open').length - 1;
+      if (!isHighestOpenLayer) return;
       onEscapeKeyDown?.(event);
       if (!event.defaultPrevented && onDismiss) {
         event.preventDefault();
